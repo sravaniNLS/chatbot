@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MumBot Chat</title>
+    <style>
+       body {
+        font-family: Arial, sans-serif;
+        background: url('mom.png') no-repeat center center fixed;
+        background-size: cover;
+        margin: 0;
+    }
+
+    .chat-container {
+        width: 100vw;
+        height: 98vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.8); /* Light overlay to make text readable */
+        box-sizing: border-box;
+    }
+
+    .chat-container .chat-header {
+        background-color: #ff4ac9;
+        color: rgb(255, 255, 255);
+        padding: 10px;
+        text-align: center;
+        font-size: 18px;
+        width: 100%;
+    }
+
+    .chat-container .chat-messages {
+        padding: 20px;
+        flex: 1; /* Take up remaining vertical space */
+        width: 100%;
+        overflow-y: auto;
+        border-bottom: 1px solid #fa2fdbe2;
+    }
+
+    .chat-container .chat-input {
+        display: flex;
+        padding: 10px;
+        width: 100%;
+        box-sizing: border-box; /* Include padding in width calculation */
+    }
+
+    .chat-container .chat-input input {
+        flex: 1; /* Take up remaining horizontal space */
+        padding: 10px;
+        border: none;
+        border-top: 1px solid #3a042e;
+        width: 30%;
+    }
+
+    .chat-container .chat-input button {
+        padding: 10px;
+        border: none;
+        background-color: #df14c0;
+        color: white;
+        cursor: pointer;
+        width: 20%;
+    }
+
+    .chat-container .chat-input button:hover {
+        background-color: #ef5fdc;
+        width: 20%;
+    }
+
+    .chat-container .message {
+        margin-bottom: 15px;
+        max-width: 75%;
+    }
+
+    .chat-container .message.user {
+        text-align: right;
+    }
+
+    .chat-container .message.bot {
+        text-align: left;
+    }
+
+    .chat-container .message p {
+        display: inline-block;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .chat-container .message.user p {
+        background-color: #e86fcb;
+        color: white;
+    }
+
+    .chat-container .message.bot p {
+        background-color: #ffffff;
+    }
+        .message {
+            margin-bottom: 15px;
+        }
+        .message.user {
+            text-align: right;
+        }
+        .message.bot {
+            text-align: left;
+        }
+        .message p {
+            display: inline-block;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 75%;
+        }
+        .message.user p {
+            background-color: #DCF8C6;
+        }
+        .message.bot p {
+            background-color: #f1f1f1;
+        }
+        .back-button {
+            position: fixed;
+            top: 1px;
+            left: 20px;
+            background-color: #0d8905;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            z-index: 9999;
+        }
+        .back-button:hover {
+            background-color: #09db28;
+        }
+    </style>
+</head>
+<body>
+    <a href="dash.html" class="back-button">Back</a>
+
+<div class="chat-container">
+    <div class="chat-header">
+        MumBot
+    </div>
+    <div class="chat-messages" id="chat-messages">
+        <div class="message bot">
+            <p>Hi there! I'm MumBot, your virtual motherly assistant. How can I help you today?</p>
+        </div>
+    </div>
+    <div class="chat-input">
+        <input type="text" id="user-input" placeholder="Type your message here...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+    const messagesContainer = document.getElementById('chat-messages');
+
+    function sendMessage() {
+        const userInput = document.getElementById('user-input');
+        const messageText = userInput.value.trim();
+
+        if (messageText !== '') {
+            addMessage('user', messageText);
+            userInput.value = '';
+            setTimeout(() => {
+                getBotResponse(messageText);
+            }, 500);
+        }
+    }
+
+    function addMessage(sender, text) {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message', sender);
+        const messageText = document.createElement('p');
+        messageText.textContent = text;
+        messageElement.appendChild(messageText);
+        messagesContainer.appendChild(messageElement);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function getBotResponse(userText) {
+        let botResponse = '';
+
+        // Basic keyword matching for responses
+        if (userText.toLowerCase().includes('advice')) {
+            botResponse = 'Sure, honey. What do you need advice on?';
+        } else if (userText.toLowerCase().includes('recipe')) {
+            botResponse = 'I have a great recipe for you! How about trying my famous lasagna?';
+        } else if (userText.toLowerCase().includes('love you')) {
+            botResponse = 'I love you too, sweetheart!';
+        } else if (userText.toLowerCase().includes('thank you')) {
+            botResponse = 'You\'re welcome, dear. I\'m always here for you.';
+        } else if (userText.toLowerCase().includes('worried')) {
+            botResponse = 'It\'s okay to feel worried sometimes. Take a deep breath and remember I\'m here to support you.';
+        } else if (userText.toLowerCase().includes('happy')) {
+            botResponse = 'That\'s wonderful to hear! What made you happy today?';
+        } else if (userText.toLowerCase().includes('struggling with studies')) {
+            botResponse = 'Focus on one thing at a time, take breaks, and don’t be afraid to ask for help. You can do it!';
+        } else if (userText.toLowerCase().includes('difficult colleague')) {
+            botResponse = 'Stay calm, be professional, and try to understand their perspective. If things don’t improve, speak to your supervisor.';
+        } else if (userText.toLowerCase().includes('changing career')) {
+            botResponse = 'Follow your heart, but also do thorough research. Make sure it\'s something you\'re passionate about and that it aligns with your long-term goals.';
+        } else if (userText.toLowerCase().includes('manage my finances')) {
+            botResponse = 'Start by creating a budget, track your expenses, save a portion of your income, and avoid unnecessary debts.';
+        } else if (userText.toLowerCase().includes('take a gap year')) {
+            botResponse = 'If you feel it will help you grow and learn more about yourself, go for it. Just make sure you have a plan for what you want to achieve during that time.';
+        } else if (userText.toLowerCase().includes('quick dinner')) {
+            botResponse = 'How about spaghetti aglio e olio? It’s quick and delicious. You just need pasta, garlic, olive oil, and chili flakes.';
+        } else if (userText.toLowerCase().includes('healthy breakfast')) {
+            botResponse = 'Try overnight oats with almond milk, chia seeds, and fresh berries. It’s nutritious and easy to prepare.';
+        } else if (userText.toLowerCase().includes('snack for kids')) {
+            botResponse = 'Apple slices with peanut butter are a great option. They’re healthy and kids love them.';
+        } else if (userText.toLowerCase().includes('dessert recipe')) {
+            botResponse = 'Sure! How about a simple chocolate mousse? Mix melted chocolate with whipped cream and let it chill in the fridge.';
+        } else if (userText.toLowerCase().includes('feeling down')) {
+            botResponse = 'It’s okay to have bad days. Remember that I love you and I’m here for you. What can I do to help?';
+        } else if (userText.toLowerCase().includes('stressed out')) {
+            botResponse = 'Take a deep breath. Try to take some time for yourself, do something you enjoy, and remember to take things one step at a time.';
+        } else if (userText.toLowerCase().includes('fight with friend')) {
+            botResponse = 'Conflicts happen. Try to talk it out calmly and listen to each other’s perspectives. True friends will understand.';
+        } else if (userText.toLowerCase().includes('feeling lonely')) {
+            botResponse = 'It’s natural to feel lonely sometimes. Reach out to someone you trust, and remember that I’m always here to chat.';
+        } else if (userText.toLowerCase().includes('scared about the future')) {
+            botResponse = 'The future can be uncertain, but focus on the present and take things one day at a time. You’re stronger than you think.';
+        } else if (userText.toLowerCase().includes('organize my day')) {
+            botResponse = 'Make a to-do list each morning, prioritize tasks, take breaks, and don’t forget to make time for yourself.';
+        } else if (userText.toLowerCase().includes('cleaning the house')) {
+            botResponse = 'Tackle one room at a time, use a checklist, and declutter regularly. You’ll be amazed at the difference it makes.';
+        } else if (userText.toLowerCase().includes('exercise routine')) {
+            botResponse = 'Try to mix cardio, strength training, and flexibility exercises. Find activities you enjoy to keep yourself motivated.';
+        } else {
+            botResponse = 'Hi, dear. Let me know how I can help.';
+        }
+
+        addMessage('bot', botResponse);
+    }
+</script>
+</body>
+</html>

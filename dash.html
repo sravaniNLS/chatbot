@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Family and Friends</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('https://i2.wp.com/www.99inspiration.com/wp-content/uploads/2016/10/Wonderful-Fine-Art-Landscape-Photography-by-frank-delargy.jpg?w=1811&ssl=1'); /* Background pattern image */
+            background-repeat: repeat; /* Repeat the pattern */
+            background-size: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            gap: 20px;
+        }
+        .person {
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 20px;
+            padding: 30px 20px;
+            border-radius: 50px;
+            box-shadow: 0 8px 16px rgba(228, 223, 223, 0.2);
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+            color: #fff;
+            width: 180px;
+            height: 180px;
+            text-align: center;
+            font-size: 20px;
+        }
+        .person:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+        .person i {
+            font-size: 96px; /* Increased icon size */
+            margin-bottom: 15px;
+        }
+        .mom { background-color: #ff8d8d; }
+        .father { background-color: #99ccff; }
+        .brother { background-color: #99ff99; }
+        .sister { background-color: #99ffec; }
+        .friend { background-color: #f4cf62; }
+        .grandmother { background-color: #ff99e7; }
+        h1 {
+            color: #f1eaea;
+            font-size: 36px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        
+        h2 {
+            color: #fff;
+            font-size: 18px;
+            margin: 0;
+        }
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #d74011;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            z-index: 9999;
+        }
+        .back-button:hover {
+            background-color: #f7679c;
+        }
+    </style>
+</head>
+<body>
+    <a href="video.html" class="back-button">Back</a>
+    <div class="container">
+       
+        <h1>Chat with Family and Friends</h1>
+        <div class="person mom" onclick="openChat('mum.html')">
+            <i class="fas fa-user"></i>
+            <h2>Mom</h2>
+        </div>
+        <div class="person father" onclick="openChat('dad.html')">
+            <i class="fas fa-user-tie"></i>
+            <h2>Father</h2>
+        </div>
+        <div class="person brother" onclick="openChat('brother')">
+            <i class="fas fa-user"></i>
+            <h2>Brother</h2>
+        </div>
+        <div class="person sister" onclick="openChat('sister')">
+            <i class="fas fa-user"></i>
+            <h2>Sister</h2>
+        </div>
+        <div class="person friend" onclick="openChat('friend')">
+            <i class="fas fa-user-friends"></i>
+            <h2>Friend</h2>
+        </div>
+        
+    </div>
+
+    <script>
+        function openChat(person) {
+            alert('This will open the chat for ' + person + '. Chatbot functionality needs to be implemented.');
+            // You can replace the alert with the code to open the chatbot
+            // e.g., window.location.href = person + '.html';
+        }
+        function openChat(url) {
+        window.location.href = url;
+    }
+    </script>
+</body>
+</html>

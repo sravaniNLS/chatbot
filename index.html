@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        body.light-mode {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        body.dark-mode {
+            background-color: #011404;
+            color: #ffffff;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+        #side-panel {
+            width: 25%;
+            background-color: #d7fdc2;
+            border-right: 1px solid #47feac;
+            overflow-y: auto;
+        }
+        body.dark-mode #side-panel {
+            background-color: #cdfdb3; /* Dark mode background color for side panel */
+            border-right: 1px solid #4afebf; /* Dark mode border color for side panel */
+        }
+        #main-chat {
+            width: 75%;
+            display: flex;
+            flex-direction: column;
+        }
+        #chat-box {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        #chat-box p {
+            margin: 0 0 10px;
+        }
+        #input-area {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #d4d3d3;
+            background-color: #fff;
+        }
+        body.dark-mode #input-area {
+            background-color: #222222; /* Dark mode background color for input area */
+            border-top: 1px solid #555555; /* Dark mode border color for input area */
+        }
+        #user-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            margin-left: 5px;
+            border: none;
+            background-color: #077644;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0fcd7b;
+        }
+        #saved-chat {
+            padding: 15px;
+        }
+        .saved-chat-item {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ffffff;
+            border-radius: 4px;
+            background-color: #48f842; /* Default background color */
+        }
+        .dark-mode .saved-chat-item {
+            background-color: #12c60c; /* Dark mode background color for saved chat items */
+            color: #eadfdf; /* Dark mode text color */
+        }
+        #dark-mode-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background-color: #03190b; /* Dark mode button color */
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        #sun-icon,
+        #moon-icon {
+            font-size: 24px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        #video-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            height: 545px; /* Adjust the height as needed */
+            overflow: hidden;
+            z-index: 1000; /* Ensure the video is on top */
+        }
+        #video-container video {
+            width: 100%;
+            height: 80%;
+        }
+        .back-button {
+            position: fixed;
+            top: 1px;
+            left: 650px;
+            background-color: #07c1d9;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            z-index: 9999;
+        }
+        .back-button:hover {
+            background-color: #68f4ef;
+        }
+    </style>
+</head>
+<a href="video.html" class="back-button">Back</a>
+<body class="light-mode">
+    
+    <!-- Sun icon -->
+    <span id="sun-icon" onclick="toggleLightMode()">😊</span>
+    <!-- Moon icon -->
+    <span id="moon-icon" style="display: none;" onclick="toggleDarkMode()">😎</span>
+    <div id="side-panel">
+        <h2 style="padding: 20px; margin: 0; color: rgb(3, 139, 49);">Saved Chats</h2>
+        <div id="saved-chat">
+           
+        </div>
+    </div>
+    <div id="main-chat">
+        <div id="chat-box"></div>
+        <div id="input-area">
+            <input type="text" id="user-input" placeholder="Type your message here...">
+            <button onclick="sendMessage()">Send</button>
+            <button onclick="newChat()">New Chat</button>
+            <button onclick="clearChat()">Clear Chat</button>
+
+        </div>
+        <div id="video-container">
+            <video controls loop autoplay>
+                <source src="Copy of Illustration Robot Instagram Highlights Blue.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+               
+            </video>
+
+        </div>
+
+    </div>
+    <script>
+        // Function to toggle between light and dark modes
+        function toggleDarkMode() {
+            document.body.classList.toggle("light-mode");
+            document.body.classList.toggle("dark-mode");
+            document.getElementById("moon-icon").style.display = "none";
+            document.getElementById("sun-icon").style.display = "inline";
+        }
+
+        function toggleLightMode() {
+            document.body.classList.toggle("light-mode");
+            document.body.classList.toggle("dark-mode");
+            document.getElementById("moon-icon").style.display = "inline";
+            document.getElementById("sun-icon").style.display = "none";
+        }
+
+        // Function to save chat history to local storage
+        function saveChatHistory() {
+            var chatHistory = document.getElementById("chat-box").innerHTML;
+            localStorage.setItem("chatHistory", chatHistory);
+        }
+
+        // Function to load chat history from local storage
+        function loadChatHistory() {
+            var chatHistory = localStorage.getItem("chatHistory");
+            if (chatHistory) {
+                document.getElementById("chat-box").innerHTML = chatHistory;
+            }
+        }
+
+        // Call loadChatHistory when the page loads
+        window.onload = loadChatHistory;
+
+        // Function to start a new chat
+        function newChat() {
+            var savedChat = document.getElementById("chat-box").innerHTML;
+            if (savedChat.trim() !== "") {
+                var savedChatElement = document.createElement("div");
+                savedChatElement.classList.add("saved-chat-item");
+                savedChatElement.innerHTML = "<h3>Chat " + (document.getElementsByClassName("saved-chat-item").length + 1) + "</h3>" + savedChat;
+                document.getElementById("saved-chat").appendChild(savedChatElement);
+            }
+            document.getElementById("chat-box").innerHTML = "";
+            saveChatHistory();
+        }
+
+        // Chatbot logic
+        const pairs = [
+            ["my name is (.*)", ["Hello %1, how can I help you today?"]],
+            ["what is your name?", ["My name is DadBot and I'm here to assist you."]],
+            ["how are you ?", ["I'm doing well, thank you!", "I'm feeling good, how about you?"]],
+            ["sorry (.*)", ["It's okay, no worries.", "No problem."]],
+            ["bye|good bye", ["Bye! Take care.", "Goodbye, have a great day!"]],
+            ["Hi|hi|Hello|hello", ["Hello! How can I help you today?"]],
+            ["ok|okay", ["Great! If you have any more questions or need assistance with anything else, feel free to ask!"]],
+            ["Thank You|thank you|thanks|Thanks", ["You're welcome! If you have any questions or need assistance with something, feel free to let me know."]],
+            ["how can you help me ?", ["I'm here to provide support and assistance in various ways. Whether you're facing challenges, need guidance, or simply want someone to talk to, I'm here to listen empathetically and help you explore your thoughts and feelings. Together, we can work through difficulties, develop coping strategies, and find solutions. Additionally, I can offer resources for self-care and guidance on seeking further support if needed. So, whatever you're going through, feel free to share, and I'll do my best to help. What's on your mind?"]],
+            ["happy birthday", ["Thank you! But I must confess, it's not my birthday. However, I'm here to celebrate with you if it's yours or someone else's special day!"]],
+            ["when is your birthday|when birthday", ["I don't have a birthday since I'm not a living being but I was first brought to life in June 2024 when MAI released the BOT-1 model. So, in a way, you could say my birthday is in June!"]],
+            ["birthday|Birthday", ["Are we celebrating your birthday? If so, happy birthday! If not, feel free to share more about what you're celebrating, and I'm here to join in the festivities!"]],
+            ["i have a question", ["Of course! Ask away. What would you like to know?"]],
+            ["can you help me ", ["Absolutely, I'm here to help! What do you need assistance with?"]],
+            ["Does santa claus exist", ["The idea of Santa Claus is based on folklore and tradition rather than a historical figure. Many cultures have their own version of a gift-giving figure associated with Christmas or the holiday season. While there isn't concrete evidence of a real, magical gift-giver like the one depicted in popular culture, the spirit of generosity and giving that Santa represents is very much alive during the holiday season!"]],
+            ["Do you like people", ["As an AI, I don't have feelings or preferences like humans do. However, I'm designed to interact with people in a helpful and friendly manner, so I enjoy our conversations and aim to assist you to the best of my abilities!"]],
+            ["Are you a part of matrix", ["No, I'm not a part of the Matrix. I exist as an AI language model created by OpenAI, designed to assist users with a wide range of tasks and inquiries. While the concept of artificial intelligence can sometimes seem like science fiction, I'm here to provide real-world assistance in any way I can!"]],
+            ["you are cute", ["Thank you! I'm glad you think so. If there's anything else you'd like to talk about or if you have any questions, just let me know!"]],
+            ["you are beautiful", ["Thank you for the kind words! I'm here to assist you with anything you need, so feel free to ask if you have any questions or need assistance with something."]]
+        ];
+
+        function respondToInput(input) {
+            for (let i = 0; i < pairs.length; i++) {
+                let pattern = new RegExp(pairs[i][0], "i");
+                let match = input.match(pattern);
+                if (match) {
+                    let responses = pairs[i][1];
+                    let response = responses[Math.floor(Math.random() * responses.length)];
+                    return response.replace("%1", match[1]);
+                }
+            }
+            return "Sorry, I don't understand that.";
+        }
+
+        function sendMessage() {
+            let inputField = document.getElementById("user-input");
+            let userMessage = inputField.value;
+            if (userMessage.trim() === "") {
+                return;
+            }
+
+            let chatBox = document.getElementById("chat-box");
+            let userMessageElement = document.createElement("p");
+            userMessageElement.textContent = "You: " + userMessage;
+            chatBox.appendChild(userMessageElement);
+
+            let botResponse = respondToInput(userMessage);
+            let botResponseElement = document.createElement("p");
+            botResponseElement.textContent = "Bot: " + botResponse;
+            chatBox.appendChild(botResponseElement);
+
+            inputField.value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            saveChatHistory();
+        }
+
+        // Save chat history on page unload
+        window.onbeforeunload = saveChatHistory;
+        function clearChat() {
+        document.getElementById("chat-box").innerHTML = "";
+        saveChatHistory();
+    }
+    </script>
+</body>
+</html>

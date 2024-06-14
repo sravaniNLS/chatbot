@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .container {
+            position: relative;
+            width: 100%;
+            height: 780px; /* Adjust the height as needed */
+        }
+        .video {
+            width: 100%;
+            height: 100%;
+        }
+        .button-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 80%; /* Adjust the width as needed */
+        }
+        .button {
+            padding: 50px 50px;
+            background-color: #30c2f8;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            text-decoration: none; /* Remove underline for links */
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #99ecf4; /* Darker shade on hover */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <video class="video" controls loop>
+        <source src="TO OUR CHATBOT (1).mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="button-container">
+        <a class="button" href="dash.html">FAMILY|BOT</a>
+        <a class="button" href="index.html">AI|CHATBOT</a>
+    </div>
+</div>
+
+</body>
+</html>
+
